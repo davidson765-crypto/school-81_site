@@ -30,7 +30,7 @@ SECRET_KEY = 'lvbzh=%0!y-gyyjb*m^wh**d7j$br*7v*_w#g(d18()a_%mr$1'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    #'192.168.0.83',  #or '*'
+    'davidson-765.github.io',
     
     ]
 
