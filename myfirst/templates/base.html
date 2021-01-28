@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Мой сайт{% endblock %}
+  </title>
+  <style>
+      .bot {
+          position: fixed;
+          bottom: 0;
+          padding: 5px;
+          background: #9d634b;
+          color: #fff;
+          text-align: center;
+          left: 42%;
+      }
+      a {
+          text-decoration: none;
+          
+      }
+      TABLE {
+    width: 50%; /* Ширина таблицы */
+    border: 1px solid #399; /* Граница вокруг таблицы */
+    border-spacing: 7px 5px; /* Расстояние между границ */
+      }
+      TD {
+    background: #876EFA; /* Цвет фона */
+    border: 1px solid #333; /* Граница вокруг ячеек */
+    padding: 5px; /* Поля в ячейках */ 
+      }
+  </style>
+ </head>
+ <body bgcolor="white" link="#fff" vlink="#fff">
+  {% block content %}Ага{% endblock %}
+  
+
+  
+ </body>
+</html>

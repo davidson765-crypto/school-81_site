@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% if user.is_authenticated %} {{ user.username }} {% else %} some {% endif %} profile</title>
+<style type="text/css">
+
+body {background-color: {{ body_theme }};
+} 
+
+  TABLE {
+    background-color: #f4f4f4;
+    width: 50%; /* Ширина таблицы */
+    border: 1px solid #399; /* Граница вокруг таблицы */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-spacing: 7px 5px; /* Расстояние между границ */
+   }
+   a {
+       text-decoration: none;
+   }
+   TD {
+    background: {{ td_theme }}; /* Цвет фона */
+    border: 1px solid #333; /* Граница вокруг ячеек */
+    padding: 5px; /* Поля в ячейках */ 
+    width: 10%;
+    color: #656665;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+   }
+   
+button { 
+background-color: {{ button_theme }}; 
+border-color: white;
+color: black;
+padding: 3px 5px; 
+margin: 3px 0; 
+
+cursor: pointer; 
+width: 8%; 
+
+border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+} 
+ 
+button:hover { 
+opacity: 0.8; 
+} 
+
+.div {
+    display: inline;
+}
+
+  </style>
+ </head>     {% if user.is_authenticated %}
+ <body>
+
+<div>
+<font color="#4682B4">
+
+  <table align="center">
+  <tr><td>ФИ</td><td>{{ user.username }}  {{ user.last_name }}</td>
+<tr><td>ID</td><td>{{ user.id }}</td>
+<tr><td>статус</td><td>{% if user.is_staff %}
+Учитель
+{% else %} 
+Ученик 
+{% endif %}</td></tr>
+<tr><td>Дата регистрации:</td><td>{{ masot }}</td></tr>
+
+<div align="right"><a href="{% url 'articles:index'%}"><button type="submit">назад</button></a></div>
+   
+  </table>
+  
+  </font>
+  
+  
+  <p></p>
+  {% if not user.is_staff %}
+  
+  <div align="center">Общее кол-во баллов: {{ sum_ball }}</div><p></p>
+  
+  <form align="center" action="{% url 'articles:other' %}" method="POST">
+      
+      {% csrf_token %}
+      
+      <input required oninvalid="this.setCustomValidity('пожалуйста напишите название достижения')" oninput="setCustomValidity('')" name="messager" placeholder="ваше достижение">
+      
+      <input required oninvalid="this.setCustomValidity('балл не может быть нулевым')" oninput="setCustomValidity('')" size="10px" name="ball" placeholder="кол-во баллов">
+      
+      <button type="submit">выложить</button>
+      
+      
+      
+  </form><p></p>
+  
+  <table align="center">
+    <tr>
+          <th>
+              <h5>{% if first %}
+                  {{ first.messager }} ({{ first.ball }}) 
+                  {% endif %}
+                  
+              {% if vist %}
+              {% for i in vist %}
+              
+                 
+             | {{ i.messager }} ({{ i.ball }}) 
+              
+              
+              
+              
+              
+              {% endfor %}
+              {% endif %}
+              </h5>
+          </th>
+          </tr>
+      
+      
+  </table><p></p>
+  
+  <form align="center" action="{% url 'articles:del_at' %}" method="POST">
+      
+      
+      {% csrf_token %}
+      
+      <input required oninvalid="this.setCustomValidity('заполните поле')" oninput="setCustomValidity('')"  type="text" name="pep" placeholder="название достижения">
+      
+      <button type="submit">удалить</button>
+      
+      
+  </form>
+  
+  <p></p>
+  
+  
+  <div align="center">
+  {% if messages %}
+  
+  {% for message in messages %}
+  
+  {{ message }}
+  
+  {% endfor %}
+  
+  {% endif %}
+  
+  </div>
+  
+  {% endif %}
+  
+    {% else %}
+  
+  <p align="center">Вы не авторизованны</p>
+
+<p align="center"><a style="color: purple" href="{% url 'articles:log_in' %}"><button id="buttonn">вход</button></a></p>
+
+{% endif %}
+
+  
+  
+ </body>
+</html>
+
+
+
+
+

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    
+    
+    <title>Главная</title>
+     <meta charset="UTF-8">
+	 <link rel = 'stylesheet' href = 'css.css'>
+	 
+	 <style>
+	 td::selection{
+	     color: #ff0;
+	     background: #000;
+	 }
+	 #td::selection{
+	     color: #ff0;
+	     background: #ffd57e;
+	 }
+	 
+	 
+	     * { box-sizing: border-box; }
+body {
+    background-color: {{ body_theme }};
+  
+}
+header {
+  background: {{ header_theme }};
+  text-align: center;
+}
+header a {
+  text-decoration: none;
+  outline: none;
+
+  transition: .3s ease-in-out;
+}
+.logo {
+  color: #D5B45B;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5em;
+  padding: 20px 0;
+}
+nav {
+  display: table;
+  margin: 0 auto;
+    
+}
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.topmenu:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+{% if user.is_superuser %}
+.topmenu > li {
+
+  width: 33%;
+  float: right;
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+}
+
+{% else %}
+
+.topmenu > li {
+
+  width: 35%;
+  float: left;
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+}
+
+{% endif %}
+
+.topmenu > li > a {
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+  color: #ffefa0;
+  padding: 15px 30px;
+}
+.topmenu li a:hover { color: #D5B45B; }
+
+.topmenu > li:hover .submenu {
+  opacity: 1;
+  transform: scaleY(1);
+}
+	 
+	 
+	     a {
+	         text-decoration: none;
+	         
+	     }
+	     #ba {
+	         
+	         left: 45%;
+
+	         
+	     }
+	     
+	     
+	     #table {
+font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+text-align: left;
+border-collapse: separate;
+border-spacing: 5px;
+background: #ECE9E0;
+color: #656665;
+border: 16px solid #ECE9E0;
+border-radius: 20px;
+}
+th {
+background: {{ th_theme }};
+padding: 10px;
+}
+#td {
+background: {{ td_theme }};
+padding: 10px;
+}
+
+button { 
+background-color: {{ button_theme }}; 
+border-color: white;
+color: black;
+padding: 3px 12px; 
+margin: 3px 0; 
+
+cursor: pointer; 
+width: 10%; 
+
+border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; 
+ 
+} 
+ 
+button:hover { 
+opacity: 0.8; 
+} 
+
+#ss:hover {
+    background-color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#buttonn { 
+background-color: {{ button_theme }}; 
+border-color: black;
+color: black;
+padding: 3px 5px; 
+margin: 3px 0; 
+
+cursor: pointer; 
+width: 10%; 
+
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+ 
+} 
+ 
+#buttonn:hover { 
+opacity: 0.8; 
+} 
+
+#ss::selection {
+    color: #ff0;
+	     background: #000;
+}
+
+	     
+	 </style>
+</head>
+
+{% if user.is_authenticated %}
+
+<header>
+  <div onclick="alert('it is title');" class="logo">МБОУ СОШ № 81</div>
+  <nav>
+      <ul class="topmenu">
+        
+
+          
+
+
+        
+        
+        
+        
+        {% if user.is_superuser %}
+        <li><a href="/admin/">Админка</a></li>
+        {% endif %}
+        
+        <li><a href="{% url 'articles:log_out' %}">Выход</a></li>
+        <li><a href="{% url 'articles:profile' %}">Профиль</a></li>
+        
+      </ul>
+      <p></p>
+    </nav>
+</header>
+
+<p></p>
+
+
+<body>
+    
+
+    <h2 align="center">Рейтинг учащихся</h2>
+	
+
+
+	
+	        
+	        
+	<form align="center" method="POST" action="{% url 'articles:filt' %}">
+	    {% csrf_token %}
+	    
+	   <!--<select size="2" name="fin">
+
+    <option value="ID">ID</option>
+    <option value="Имя">Имя</option>
+
+   </select>-->
+	    
+	    
+	    
+		<input maxlength="80" type=text name="ext" placeholder="введите имя или ID">
+	
+		<button type="submit">найти</button>
+	</form><p></p>	
+	
+	<div align="center">
+	{% if messages %}
+	{% for message in messages %}
+	{{ message }}
+	{% endfor %}
+	{% endif %}
+	</div>
+	<p></p>
+
+	
+	<table id="table" border="2" align="center" width="60%" cellspacing="0" >
+	    
+	    {% if latest_articles_list %}
+			
+			{% for a in latest_articles_list %}
+ 
+		<tr>
+		    
+			
+			<td id="td" align="center">{{ a.id }}</td>
+			<th align="center"><a id="ss" style="color: black" href="{% url 'articles:detail' a.id %}"> {{ a.username }} </a></th>
+			<td id="td" align="center">{{ a.last_name }}</td>
+			
+			
+			
+			
+			
+		</tr>
+		
+		{% endfor %}
+		
+		{% endif %}
+		
+		
+
+	</table>
+	
+	<br>
+	
+
+	<p></p>
+	
+	<form align="center" action="{% url 'articles:theme' %}" method="POST">
+	    {% csrf_token %}
+	     <select size="2" name="main_theme">
+                <option disabled>Выберите основную цветовую тему</option>
+                <option value="Морская">Морская</option>
+                <option value="Пустынная">Пустынная</option>
+            </select>
+	    <button>change</button>
+	</form>
+	
+	
+	
+</body>
+
+{% else %}
+
+<p align="center">Вы не авторизованны</p>
+
+<p align="center"><a style="color: purple" href="{% url 'articles:log_in' %}"><button id="buttonn">вход</button></a></p>
+
+{% endif %}
+
+
+
+
+
+
+</html>

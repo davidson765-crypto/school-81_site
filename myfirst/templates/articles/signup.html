@@ -1,0 +1,237 @@
+{% extends 'bas.html' %}
+
+{% block title %}
+Регистрация
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+<style>
+
+body {background-color: {{ body_theme }};
+}
+input { 
+width: 100%; 
+padding: 10px 25px; 
+margin: 10px 0; 
+display: inline-block; 
+border: 1px solid #ccc; 
+box-sizing: border-box; 
+} 
+
+
+    button { 
+background-color: {{ button_theme }}; 
+border-color: black;
+color: black;
+padding: 6px 7px; 
+margin: 8px 0; 
+
+cursor: pointer; 
+width: 15%; 
+ 
+border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+ 
+} 
+ 
+    button:hover { 
+opacity: 0.8; 
+} 
+
+
+
+#button { 
+background-color: {{ button_theme }}; 
+border-color: black;
+color: black;
+padding: 6px 7px; 
+margin: 8px 0; 
+
+cursor: pointer; 
+width: 8%; 
+ 
+border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+ 
+} 
+ 
+#button:hover { 
+opacity: 0.8; 
+} 
+
+
+
+    
+</style>
+
+
+
+<h1 align="center">Регистрация</h1>
+
+{% if user.is_authenticated %}
+
+<div align="center">Вы успешно зарегистрированы.</div>
+
+<p>
+<div align="center"><a style="color: purple" href="{% url 'articles:index' %}"><button type="submit">на главную</button></a></div>
+</p>
+
+
+
+{% else %}
+<div align="center">
+<form action="{% url 'articles:signup' %}" method="POST">
+    {% csrf_token %}
+<table>
+    
+    <tr>
+        <td>    
+            <label><b>Имя</b></label>
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            <input size="60" placeholder="имя" type="text" name="username" required oninvalid="this.setCustomValidity('пожалуйста напишите своë имя')" oninput="setCustomValidity('')" autocomplete="off"/>
+        </td>
+    </tr>    
+    
+    <tr>
+        <td>
+            <label><b>Фамилия</b></label>
+        </td>
+    </tr>
+    
+    <tr>
+        <td>
+            <input placeholder="фамилия" name="last_name" required oninvalid="this.setCustomValidity('пожалуйста напишите свою фамилию')" oninput="setCustomValidity('')" autocomplete="off"/>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label><b>Пароль</b></label>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <input placeholder="пароль" type="password" name="password" required oninvalid="this.setCustomValidity('пожалуйста поставьте пароль')" oninput="setCustomValidity('')"/>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label><b>Подтвердить пароль</b></label>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <input placeholder="повторите пароль" type="password" name="password1" required oninvalid="this.setCustomValidity('пожалуйста повторите пароль')" oninput="setCustomValidity('')"/>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label><b>Email</b></label>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <input placeholder="email" type="email" name="email" required autocomplete="off"/>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <label><b> Статус</b></label>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <select size="2" name="status" required oninvalid="this.setCustomValidity('выберите статус')" oninput="setCustomValidity('')">
+                <option disabled>Выберите статус</option>
+                <option value="Ученик">Ученик</option>
+                <option value="Учитель">Учитель</option>
+            </select>
+        </td>
+    </tr>
+
+
+
+
+
+         
+            <!--<tr>
+                <td>
+                    кол-во баллов:
+                </td>
+                <td><input placeholder="count"  Давид - гей name="smeta" type="number" required/></td>
+               
+            </tr>-->
+
+                    <!--<input placeholder="status" type="text" name="status" required/>-->
+
+</table>
+ 
+            <form action="/article/">
+        <button type="submit">зарегистрироваться</button></form>
+        
+    </form>
+
+
+    
+    
+    <p><a style="color: purple" href="{% url 'articles:log_in' %}"><button id="button">войти</button></a></p>
+    </div>
+    
+    
+
+    <div align="center">
+    {% if messages %}
+
+        {% for message in messages %}
+    
+            <p>{{ message }}</p>
+        
+        {% endfor %}
+    
+    {% endif %}
+    
+    </div>
+    
+
+    
+    {% endif %}
+    
+    <!--<form align="right" action="/article/">
+<button type="submit">
+
+Назад 
+</button>
+</form>-->
+    
+
+    
+
+    
+
+
+
+
+
+
+
+{% endblock %}

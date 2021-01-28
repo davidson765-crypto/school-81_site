@@ -1,0 +1,168 @@
+
+ {% load static %}
+
+<!doctype html> 
+<html> 
+
+
+
+<head>
+   
+    
+    <script type="text/javascript" src="{% static 'static/js/scrip.js' %}">
+    
+</script>
+
+    
+    <title>login</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1" > 
+<style> 
+body {background-color: {{ body_theme }};
+} 
+input { 
+width: 100%; 
+padding: 12px 30px; 
+margin: 10px 0; 
+display: inline-block; 
+border: 1px solid #ccc; 
+box-sizing: border-box; 
+} 
+
+
+
+ 
+a { 
+text-decoration: none; 
+} 
+ 
+#buttonn { 
+background-color: {{ button_theme }}; 
+border-color: black;
+color: black;
+padding: 14px 10px; 
+margin: 10px 0; 
+
+cursor: pointer; 
+width: 100%; 
+
+border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+ 
+} 
+ 
+#buttonn:hover { 
+opacity: 0.8; 
+} 
+
+
+#button { 
+background-color: {{ button_theme }}; 
+border-color: black;
+color: black;
+padding: 14px 10px; 
+margin: 10px 0; 
+
+cursor: pointer; 
+width: 55%; 
+
+border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+ 
+} 
+ 
+#button:hover { 
+opacity: 0.8; 
+} 
+
+
+
+ 
+.container { 
+padding: 50px; 
+margin: 0 auto; 
+max-width: 500px; 
+} 
+ 
+span.psw { 
+float: center; 
+padding-top: 30px; 
+} 
+ 
+@media screen and (max-width: 100px) { 
+span.psw { 
+display: block; 
+float: center; 
+ 
+} 
+ 
+.cancelbtn { 
+width: 100%; 
+} 
+ 
+
+ 
+</style> 
+</head> 
+ 
+{% if not user.is_authenticated %} 
+ 
+<body onload=""> 
+
+<h1 align="center">Вход</h1>
+ 
+ 
+<form method="POST" action="{% url 'articles:log_in' %}"> 
+ 
+{% csrf_token %} 
+ 
+<div class="container"> 
+<label for="name"><b>Логин</b></label> 
+<input id="username" type="text" placeholder="Введите имя" name="username" oninvalid="this.setCustomValidity('пожалуйста заполните поле имени')" oninput="setCustomValidity('')" required> 
+ 
+<label for="psw"><b>Пароль</b></label> 
+<input id="password" type="password" placeholder="Введите пароль" name="password" required oninvalid="this.setCustomValidity('пожалуйста заполните поле пароля')" oninput="setCustomValidity('')"> 
+<form action="{% url 'articles:profile' %}"> 
+<button id="buttonn" type="submit">Войти</button> 
+</form> 
+</div> 
+ 
+<div class="container"> 
+<a href="{% url 'articles:signup' %}"><button id="button">зарегистрироваться</button></a> 
+</div> 
+ 
+{% if messages %} 
+ 
+{% for message in messages %} 
+ 
+<p class="container">{{ message }}</p> 
+ 
+{% endfor %} 
+ 
+{% endif %} 
+ 
+ 
+</form> 
+ 
+ 
+ 
+</body> 
+ 
+{% else %} 
+ 
+<div align="center">Вы уже авторизованы. </div><p></p>
+<div align="center"><a href="{% url 'articles:index' %}"><button id="button">на главную</button></a></div>
+ 
+{% endif %} 
+
+
+
+
+
+
+
+ 
+</html>

@@ -1,0 +1,103 @@
+{% extends 'bas.html' %}
+
+{% block title %}
+Регистрация
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+<style>
+
+body {background-color: {{ body_theme }};
+}
+
+
+
+button { 
+background-color: {{ button_theme }}; 
+border-color: white;
+color: black;
+padding: 4px 5px; 
+margin: 8px 0; 
+
+cursor: pointer; 
+width: 10%; 
+ 
+border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+ 
+} 
+ 
+    button:hover { 
+opacity: 0.8; 
+} 
+input { 
+width: 50%; 
+padding: 10px 25px; 
+margin: 10px 0; 
+display: inline-block; 
+border: 1px solid #ccc; 
+box-sizing: border-box; 
+border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+} 
+
+
+
+    
+</style>
+
+<h1 align="center">Подтверждение почты</h1>
+
+<div align="center">*проверочный код должен прийти на почту</div><p></p>
+
+
+<form align="center" action="{% url 'articles:confirm_mail' %}" method='POST'>
+    {% csrf_token %}
+    <table align="center" border="0">
+    <tr><td>Введите проверочный код: </td></tr>
+    <tr><td><input required placeholder="" name="code" oninvalid="this.setCustomValidity('пожалуйста напишите свой проверочный код')" oninput="setCustomValidity('')">
+    </td>
+    </tr>
+    </table>
+    <button type="submit">confirm</button>
+
+    
+</form>
+
+
+
+
+
+<div align="center">
+<a href="{% url 'articles:signup' %}"><button type="submit">назад</button></a>
+</div>
+
+<p>
+</p>
+
+<div align="center">
+
+{% if messages %}
+
+{% for i in messages %}
+
+{{ i }}
+
+{% endfor %}
+
+{% endif %}
+
+</div>
+
+
+{% endblock %}
+

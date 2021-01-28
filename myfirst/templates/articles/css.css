@@ -1,0 +1,32 @@
+#ins {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+#fio {
+	width: 100%;
+}
+
+#knop {
+    background-color: #876EFA;
+    padding: 14px 10px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+}
+
+#tb {
+	background-color: #876EEB;
+}
+
+
+
+@font-face { 
+    src: local ('FedraSansPro-Medium'), url(/font/FedraSansPro-Medium.ttf); 
+}
+

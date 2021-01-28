@@ -1,0 +1,40 @@
+from email.mime.multipart import MIMEMultipart 
+
+from email.mime.text import MIMEText
+
+import smtplib # Use of SMTP is to connect to a mail server and send a message # Email Settings 
+
+LOG_MAILTO = 'anymail' # Account email address 
+
+LOG_PASS = 'Supermegahost2020' # Email password
+
+LOG_FROM = 'dmiraev@gmail.com' # Email will be sent from this address 
+
+LOG_SUBJ = 'http://localhost:8000/' # Email subject 
+
+body = 'body of the message'
+
+msg = MIMEMultipart() 
+
+msg.attach(MIMEText(body)) 
+
+msg['Subject'] = LOG_SUBJ # Mail subject 
+
+msg['From'] = LOG_FROM # Mail sender 
+
+msg['To'] = LOG_MAILTO # The mail will be send to this address 
+
+msg.preamble = LOG_MSG # Mail body 
+
+
+server = smtplib.SMTP('smtp.gmail.com:587') 
+
+server.ehlo() 
+
+server.starttls() 
+
+server.login(LOG_FROM, LOG_PASS) 
+
+server.sendmail(LOG_FROM, LOG_MAILTO, msg.as_string()) 
+
+server.quit()
