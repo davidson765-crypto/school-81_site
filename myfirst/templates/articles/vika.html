@@ -35,7 +35,7 @@ header a {
   transition: .3s ease-in-out;
 }
 .logo {
-  color: #D5B45B;
+  color: {{ text_theme }};
   font-family: 'Playfair Display', serif;
   font-size: 2.5em;
   padding: 20px 0;
@@ -81,7 +81,7 @@ nav ul {
   text-transform: uppercase;
   font-size: 14px;
   font-weight: bold;
-  color: #ffefa0;
+  color: {{ text_theme }};
   padding: 15px 30px;
 }
 .topmenu li a:hover { color: #D5B45B; }
@@ -109,16 +109,18 @@ font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 text-align: left;
 border-collapse: separate;
 border-spacing: 5px;
-background: #ECE9E0;
-color: #656665;
+background: gray;
+color: gray;
 border: 16px solid #ECE9E0;
 border-radius: 20px;
 }
 th {
+color: white;
 background: {{ th_theme }};
 padding: 10px;
 }
 #td {
+color: {{ text_theme }};
 background: {{ td_theme }};
 padding: 10px;
 }
@@ -126,7 +128,7 @@ padding: 10px;
 button { 
 background-color: {{ button_theme }}; 
 border-color: white;
-color: black;
+color: {{ button_text }};
 padding: 3px 12px; 
 margin: 3px 0; 
 
@@ -155,7 +157,7 @@ opacity: 0.8;
 #buttonn { 
 background-color: {{ button_theme }}; 
 border-color: black;
-color: black;
+color: {{ button_text }};
 padding: 3px 5px; 
 margin: 3px 0; 
 
@@ -215,7 +217,7 @@ opacity: 0.8;
 <body>
     
 
-    <h2 align="center">Рейтинг учащихся</h2>
+    <h2 style="color: {{ text_theme }}" align="center">Рейтинг учащихся</h2>
 	
 
 
@@ -239,7 +241,7 @@ opacity: 0.8;
 		<button type="submit">найти</button>
 	</form><p></p>	
 	
-	<div align="center">
+	<div style="color: {{ text_theme }}"  align="center">
 	{% if messages %}
 	{% for message in messages %}
 	{{ message }}
@@ -252,16 +254,16 @@ opacity: 0.8;
 	<table id="table" border="2" align="center" width="60%" cellspacing="0" >
 	    
 	    {% if latest_articles_list %}
-			
+			<tr><td align="center" id="td">ID</td><td align="center" id="td">Имя</td><td align="center" id="td">Фамилия</td><td align="center" id="td">Кол-во баллов</td></tr>
 			{% for a in latest_articles_list %}
  
 		<tr>
 		    
 			
 			<td id="td" align="center">{{ a.id }}</td>
-			<th align="center"><a id="ss" style="color: black" href="{% url 'articles:detail' a.id %}"> {{ a.username }} </a></th>
+			<th align="center"><a id="ss" style="color: {{ text_theme }}" href="{% url 'articles:detail' a.id %}"> {{ a.username }} </a></th>
 			<td id="td" align="center">{{ a.last_name }}</td>
-			
+			<td id="td" align="center">{{ a.first_name }}</td>
 			
 			
 			
@@ -285,8 +287,9 @@ opacity: 0.8;
 	    {% csrf_token %}
 	     <select size="2" name="main_theme">
                 <option disabled>Выберите основную цветовую тему</option>
-                <option value="Морская">Морская</option>
-                <option value="Пустынная">Пустынная</option>
+                <option value="Темная">Темная</option>
+                <option value="Facebook">Facebook</option>
+                <option value="ООО">ООО</option>
             </select>
 	    <button>change</button>
 	</form>
