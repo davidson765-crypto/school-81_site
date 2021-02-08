@@ -1,4 +1,5 @@
 
+
  {% load static %}
 
 <!doctype html> 
@@ -37,8 +38,8 @@ text-decoration: none;
  
 #buttonn { 
 background-color: {{ button_theme }}; 
-border-color: black;
-color: black;
+border-color: white;
+color: {{ button_text_theme }};
 padding: 14px 10px; 
 margin: 10px 0; 
 
@@ -59,8 +60,8 @@ opacity: 0.8;
 
 #button { 
 background-color: {{ button_theme }}; 
-border-color: black;
-color: black;
+border-color: white;
+color: {{ button_text_theme }};
 padding: 14px 10px; 
 margin: 10px 0; 
 
@@ -112,7 +113,7 @@ width: 100%;
  
 <body onload=""> 
 
-<h1 align="center">Вход</h1>
+<h1 style="color: {{ text_theme }}" align="center">Вход</h1>
  
  
 <form method="POST" action="{% url 'articles:log_in' %}"> 
@@ -120,29 +121,31 @@ width: 100%;
 {% csrf_token %} 
  
 <div class="container"> 
-<label for="name"><b>Логин</b></label> 
+<label style="color: {{ text_theme }}" for="name"><b>Логин</b></label> 
 <input id="username" type="text" placeholder="Введите имя" name="username" oninvalid="this.setCustomValidity('пожалуйста заполните поле имени')" oninput="setCustomValidity('')" required> 
  
-<label for="psw"><b>Пароль</b></label> 
+<label style="color: {{ text_theme }}" for="psw"><b>Пароль</b></label> 
 <input id="password" type="password" placeholder="Введите пароль" name="password" required oninvalid="this.setCustomValidity('пожалуйста заполните поле пароля')" oninput="setCustomValidity('')"> 
 <form action="{% url 'articles:profile' %}"> 
 <button id="buttonn" type="submit">Войти</button> 
 </form> 
 </div> 
+
+{% if messages %} 
+ 
+{% for message in messages %} 
+ 
+<p style="color: {{ text_theme }}" class="container">{{ message }}</p> 
+ 
+{% endfor %} 
+ 
+{% endif %} 
  
 <div class="container"> 
 <a href="{% url 'articles:signup' %}"><button id="button">зарегистрироваться</button></a> 
 </div> 
  
-{% if messages %} 
- 
-{% for message in messages %} 
- 
-<p class="container">{{ message }}</p> 
- 
-{% endfor %} 
- 
-{% endif %} 
+
  
  
 </form> 
