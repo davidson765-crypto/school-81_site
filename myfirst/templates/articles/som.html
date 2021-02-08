@@ -20,7 +20,7 @@ body {background-color: {{ body_theme }};
 button { 
 background-color: {{ button_theme }}; 
 border-color: white;
-color: black;
+color: {{ button_text_theme }};
 padding: 4px 5px; 
 margin: 8px 0; 
 
@@ -55,15 +55,15 @@ border-top-left-radius: 10px;
     
 </style>
 
-<h1 align="center">Подтверждение почты</h1>
+<h1 style="color: {{ text_theme }}" style="color: {{ text_theme }}" align="center">Подтверждение почты</h1>
 
-<div align="center">*проверочный код должен прийти на почту</div><p></p>
+<div style="color: {{ text_theme }}" align="center">*проверочный код должен прийти на почту</div><p></p>
 
 
 <form align="center" action="{% url 'articles:confirm_mail' %}" method='POST'>
     {% csrf_token %}
     <table align="center" border="0">
-    <tr><td>Введите проверочный код: </td></tr>
+    <tr><td style="color: {{ text_theme }}" >Введите проверочный код: </td></tr>
     <tr><td><input required placeholder="" name="code" oninvalid="this.setCustomValidity('пожалуйста напишите свой проверочный код')" oninput="setCustomValidity('')">
     </td>
     </tr>
@@ -84,7 +84,7 @@ border-top-left-radius: 10px;
 <p>
 </p>
 
-<div align="center">
+<div style="color: {{ text_theme }}" align="center">
 
 {% if messages %}
 
@@ -100,4 +100,6 @@ border-top-left-radius: 10px;
 
 
 {% endblock %}
+
+
 
