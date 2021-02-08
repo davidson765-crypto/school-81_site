@@ -442,7 +442,7 @@ def filt(request):
             nam = True
             
             
-    if nam==False:
+    if nam==False and abc!="":
         
         
         if abc in name_list:
@@ -452,14 +452,14 @@ def filt(request):
             return HttpResponseRedirect(reverse('articles:detail', args=(a.id,)))
             
             
-        else:
+        elif abc not in name_list or abc=="":
             
             messages.error(request, '• имя не найдено')
             
             return HttpResponseRedirect(reverse('articles:index'))
             
         
-    elif nam==True:
+    elif nam==True and abc!="":
         
         
         if int(abc) in id_list:
@@ -469,11 +469,18 @@ def filt(request):
             return HttpResponseRedirect(reverse('articles:detail', args=(a.id,)))
             
             
-        else:
+        elif int(abc) not in id_list or abc=="":
             
             messages.error(request, '• id не найдено')
             
             return HttpResponseRedirect(reverse('articles:index'))
+
+
+    else:
+
+        messages.error(request, '• пустое значение')
+            
+        return HttpResponseRedirect(reverse('articles:index'))
 
 
 
@@ -683,7 +690,5 @@ def signup(request):
     
 
 
-
-    
 
 
