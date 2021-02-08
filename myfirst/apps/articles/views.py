@@ -29,53 +29,92 @@ last_namee = ''
 
 statuss = ''
 
-td_theme = '#fca652'
+td_theme = '#383838'
 
-th_theme = '#fca652'
+th_theme = '#383838'
 
-body_theme = '#eaac7f'
+body_theme = '#474747'
 
-button_theme = '#ffefa0'
+button_theme = '#dcdcdc'
 
-header_theme = '#91684a'
+header_theme = '#2a2a2a'
 
-main_theme = "Пустынная"
+main_theme = "Темная"
+
+text_theme = '#b6c0bd'
+
+button_text = "black"
+
         
     
 def theme(request):
     
-    global td_theme, th_theme, body_theme, button_theme, header_theme
+    global td_theme, th_theme, body_theme, button_theme, header_theme, text_theme, main_theme, button_text
     
     main_theme = request.POST.get("main_theme")
     
     if request.method=='POST':
         
-        if main_theme=="Морская":
+        if main_theme=="Темная":
             
-            td_theme = '#a3c5a0'
+            td_theme = '#383838'
             
-            body_theme = '#006d72'
+            body_theme = '#474747'
             
-            th_theme = '#a3c5a0'
+            th_theme = '#383838'
             
-            button_theme = '#29b49d'
+            button_theme = '#dcdcdc'
             
-            header_theme = '#2f4f4f'
+            header_theme = '#2a2a2a'
             
-        elif main_theme=="Пустынная":
+            text_theme = '#b6c0bd'
             
-            td_theme = '#fca652'
+            main_theme = "Темная"
             
-            body_theme = '#eaac7f'
+            button_text = "black"
             
-            th_theme = '#fca652'
+        elif main_theme=="Facebook":
             
-            button_theme = '#ffefa0'
+            td_theme = "#D0E8F2"
             
-            header_theme = '#91684a'
+            th_theme = "#D0E8F2"
+            
+            body_theme = "#FCF8EC"
+            
+            button_theme = "#79A3B1"
+            
+            header_theme = "#79A3B1"
+            
+            text_theme = "black"
+            
+            main_theme = "Facebook"
+            
+            button_text = "black"
+            
+        elif main_theme=="ООО":
+            
+            td_theme = "#E6739F"
+
+            th_theme = "#E6739F"
+            
+            body_theme = "#F1D4D4"
+            
+            button_theme = "#790C5A"
+            
+            header_theme = "#790C5A"
+            
+            text_theme = "white"
+            
+            main_theme = "ООО"
+            
+            button_text = "white"
+            
+            
+        #elif main_theme=="Пустынная":
+            
+        
             
     
-            
     return HttpResponseRedirect(reverse('articles:index'))
 
 
@@ -125,10 +164,10 @@ def confirm_mail(request):
 
             messages.error(request, '• код не верный')
             
-            return render(request, 'articles/som.html', {'body_theme':body_theme, 'button_theme':button_theme})
+            return render(request, 'articles/som.html', {'body_theme':body_theme, 'text_theme':text_theme, 'button_theme':button_theme, 'button_text':button_text})
             
     
-    return render(request, 'articles/som.html', {'body_theme':body_theme, 'button_theme':button_theme})
+    return render(request, 'articles/som.html', {'body_theme':body_theme, 'text_theme':text_theme, 'button_theme':button_theme, 'button_text':button_text})
 
 
 
@@ -181,6 +220,8 @@ def other(request):
     
         messager = request.POST.get('messager')
         
+        messager_text = request.POST.get("messager_text")
+        
         cp = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM@#₽_&-+() /:!?;~`|•√π÷×¶∆£€$¢^°={\}%©®™℅][йцукенгшщзхфывапролджэячсмитьбюЙЦУКЕНГШЩЗХФЫВАПРОЛДЖЭЯЧСМИТЬБЮ'
         
         coplo = list(cp)
@@ -228,7 +269,7 @@ def other(request):
                 
             else:
     
-                mn = Users.objects.create(messager=messager, mess=mess, ball=ball)
+                mn = Users.objects.create(messager=messager, mess=mess, messager_text=messager_text, ball=ball)
     
                 return HttpResponseRedirect(reverse( 'articles:profile')) 
 
@@ -258,35 +299,23 @@ def profile(request):
     
         sum_ball = 0
         
-        
-        if not request.user.is_staff:
-        
-        
-            if len(vist)!=0:
-    
-                first = vist[0]
+        for i in b:
             
-                ki = []
-                
-            
-                for i in vist:
-                    
-                    hk = i.ball
-                    
-                    ki.append(hk) 
-                    
-                
-                sum_ball = sum(ki)
+            sum_ball+=i.ball
         
-                vist.remove(vist[0])
+        
+        a.first_name = sum_ball
+        
+        a.save()
+        
+        
 
-
-        return render(request, 'articles/ishod.html', {'users': a, 'b': b, 'first': first, 'vist': vist,'masot':masot,  'sum_ball': sum_ball, 'body_theme':body_theme, 'button_theme':button_theme, 'td_theme':td_theme})
+        return render(request, 'articles/ishod.html', {'users': a, 'b': b, 'masot':masot, 'body_theme':body_theme, 'button_theme':button_theme,'text_theme':text_theme, 'td_theme':td_theme, 'button_text':button_text})
     
     
     else:
         
-        return render(request, 'articles/ishod.html', {'body_theme':body_theme, 'button_theme':button_theme, 'td_theme':td_theme})
+        return render(request, 'articles/ishod.html', {'body_theme':body_theme, 'button_theme':button_theme, 'text_theme':text_theme, 'td_theme':td_theme, 'button_text':button_text})
 
         
 
@@ -299,15 +328,36 @@ def index(request):
     
     latest_articles_list = []
     
-    latest=User.objects.all().order_by('-id')
+    latest=User.objects.all().order_by('-first_name')
     
+    count_ball = []
+    
+    summa_ball = 0
+    
+    ball = None
     
     for i in range(10):
         
+        
+        if i==list_count:
+            
+            break
+        
+        
         latest_articles_list.append(latest[i])
         
+        balls = Users.objects.filter(mess_id=latest[i].id)
         
-    return render(request, 'articles/vika.html', { 'latest_articles_list':latest_articles_list, 'list_count':list_count, 'latest':latest, 'body_theme':body_theme, 'td_theme':td_theme, 'th_theme':th_theme, 'button_theme':button_theme, 'header_theme':header_theme})
+        
+        
+        for i in balls:
+            
+            summa_ball += i.ball
+            
+            
+        
+        
+    return render(request, 'articles/vika.html', { 'latest_articles_list':latest_articles_list, 'latest':latest, 'body_theme':body_theme, 'td_theme':td_theme, 'th_theme':th_theme, 'button_theme':button_theme, 'header_theme':header_theme, 'text_theme':text_theme, 'button_text':button_text})
 
 
 
@@ -357,7 +407,7 @@ def detail(request, user_id):
         vist.remove(vist[0])
         
     
-    return render(request, 'articles/detail.html', {'users': a, 'b': b, 'vist': vist, 'first': first, 'sum_ball': sum_ball, 'body_theme':body_theme, 'button_theme':button_theme, 'td_theme':td_theme}) 
+    return render(request, 'articles/detail.html', {'users': a, 'b': b, 'vist': vist, 'first': first, 'sum_ball': sum_ball, 'body_theme':body_theme, 'button_theme':button_theme, 'td_theme':td_theme, 'text_theme':text_theme, 'button_text':button_text}) 
 
     
 
@@ -475,7 +525,7 @@ def log_in(request):
             messages.error(request, '• имя не найдено')
        
     
-    return render(request, 'articles/avt.html', {'body_theme':body_theme, 'button_theme':button_theme})
+    return render(request, 'articles/avt.html', {'body_theme':body_theme, 'button_theme':button_theme, 'text_theme':text_theme, 'button_text':button_text})
           
     
         
@@ -568,9 +618,9 @@ def signup(request):
                             
                             LOG_MAILTO = email
                             
-                            LOG_PASS = 'Supermegahost2020'
+                            LOG_PASS = 'Lopaknit247'
                             
-                            LOG_FROM = 'dmiraev@gmail.com'
+                            LOG_FROM = 'ttset243@gmail.com'
                             
                             LOG_SUBJ = 'My school faculty'
                             
@@ -606,7 +656,7 @@ def signup(request):
                             
                             statuss = status
                             
-                            return render(request, 'articles/som.html', {'body_theme':body_theme, 'button_theme':button_theme})
+                            return render(request, 'articles/som.html', {'body_theme':body_theme, 'button_theme':button_theme, 'button_text':button_text})
 
                     
                         else:
@@ -629,7 +679,11 @@ def signup(request):
             messages.error(request, '• это имя существует')
         
 
-    return render(request, 'articles/signup.html', {'vak': vak, 'ban': ban, 'body_theme':body_theme, 'button_theme':button_theme})
+    return render(request, 'articles/signup.html', {'vak': vak, 'ban': ban, 'body_theme':body_theme, 'button_theme':button_theme, 'text_theme':text_theme, 'button_text':button_text})
+    
+
+
+
     
 
 
